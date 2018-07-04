@@ -1,5 +1,6 @@
 MODULE morton_order_2D
-
+  IMPLICIT NONE
+  
   ! Lookup tables
   INTEGER, ALLOCATABLE :: ij_to_m(:,:)
   INTEGER, ALLOCATABLE :: m_to_ij(:,:)
@@ -9,10 +10,10 @@ CONTAINS
 
   FUNCTION to_morton(i,j) RESULT(m)
     ! Converts 2-D indicies (i,j) into corresponding morton index (m)
-    ! Using 4 bit integers ...
-    ! Max value of i, j coordinates is 2^15
+    ! Using 4 byte integers ...
+    ! Max value of i, j, k coordinates is 2^15
     ! Max value of morton coordinate using is 2^31
-    ! Can use 8 bit if higher values needed
+    ! Can use 8 byte if higher values needed
 
     INTEGER(KIND = 4), INTENT(IN) :: i,j
     INTEGER(KIND = 4) :: m
@@ -58,7 +59,7 @@ CONTAINS
     INTEGER, INTENT(IN) :: depth
     INTEGER, DIMENSION(0:(2**depth - 1),0:(2**depth - 1)), INTENT(OUT) :: ij_to_m
     INTEGER, DIMENSION(0:((2**depth)**2 - 1),0:1), INTENT(OUT) :: m_to_ij
-    INTEGER(KIND = 4) :: i, j
+    INTEGER(KIND = 4) :: i, j, m
 
     DO j = 0,2**depth - 1
       DO i = 0,2**depth - 1
@@ -107,4 +108,4 @@ CONTAINS
 
   END SUBROUTINE m_below
 
-END MODULE
+END MODULE morton_order_2D
